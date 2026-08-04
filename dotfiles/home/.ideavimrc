@@ -1,0 +1,145 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 注：结尾不要有注释，容易出问题
+
+" 多行操作
+" 双击 Ctrl 按住，然后按方向键，可以多选，对应<Action>(EditorCloneCaretBelow) 和 <Action>(EditorCloneCaretAbove)
+
+" 查找某个 action
+" :actionlist <关键词>
+" github 上面的 actionlist 不太靠谱，不如使用 shift-shift 找找看，然后使用 ideavim 自带的 track action ids
+
+
+" 隐藏激活的窗口
+" 只能使用快捷键 Ctrl + Esc。注意手动将 Hide Active Tool Window 绑定到该快捷键
+
+" 窗口切换器：使用 Ctrl + Tab
+
+" 使用 * 可以向下搜索光标位置的单词，使用 # 可以向上搜索
+
+" 不要使用 idea 的按键映射，使用 powertoy 的按键映射
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Plug: 'easymotion/vim-easymotion'
+
+" 需要 IdeaVimExtension plugin 支持
+set keep-english-in-normal
+
+source ~/.vimrc
+
+" 重新载入配置
+nmap <leader>ll :source ~/.ideavimrc<CR>
+
+" 在 v 模式下移动选中的行
+vmap <S-j> <Action>(MoveLineDown)
+vmap <S-k> <Action>(MoveLineUp)
+
+""" 关闭，退出
+" 可以关闭刚才打开的 window，例如 find，inspection
+nmap qq <Action>(HideActiveWindow)
+
+
+""" Debug 快捷键 """"""""""""""""""""""""""""""""""""
+" sethandler <C-1> a:vim
+" sethandler <C-2> a:vim
+" sethandler <C-3> a:vim
+" sethandler <C-4> a:vim
+" sethandler <C-5> a:vim
+
+" map <C-1> <Action>(StepOver)
+" map <C-2> <Action>(StepInto)
+" map <C-3> <Action>(StepOut)
+" map <C-4> <Action>(RunToCursor)
+" map <C-5> <Action>(Resume)
+
+map tb <Action>(ToggleLineBreakpoint)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+""" 跳转
+nmap gd <Action>(GotoDeclaration)
+nmap gej <Action>(GotoNextError)
+nmap gek <Action>(GotoPreviousError)
+nmap gf <Action>(ActivateFindToolWindow)
+nmap gl <Action>(Forward)
+nmap gh <Action>(Back)
+nmap gj <Action>(NextTab)
+nmap gk <Action>(PreviousTab)
+nmap gp <Action>(GotoSuperMethod)
+nmap gi <Action>(GotoImplementation)
+
+" AceJump 的快捷键
+nmap ;; <Action>(AceAction)
+
+
+" 下一个 method
+nmap [ <Action>(MethodUp)
+nmap ] <Action>(MethodDown)
+
+
+" 整个文档格式化/选中的文本格式化
+map <leader>ff <Action>(ReformatCode)
+
+" 重构：重命名
+nmap <leader>rr <Action>(RenameElement)
+
+" 暂时隐藏其他窗口，只留下 editor
+nmap <leader>zz <Action>(HideAllWindows)
+
+
+""" 显示某个窗口 """"""""""""""""""""""""""""""""""""""""""""""
+nmap s <Nop>
+nmap sc <Action>(ToggleRenderedDocPresentation)
+nmap ss <Action>(FindInPath)
+nmap so <Action>(FileStructurePopup)
+nmap sd <Action>(QuickJavaDoc)
+nmap se <Action>(ShowErrorDescription)
+" 在光标旁边显示 usage
+nmap su <Action>(ShowUsages)
+" 在另一个窗口显示 usage
+nmap sf <Action>(FindUsages)
+nmap si <Action>(RiderShowIncomingCalls)
+" 打开 git blame
+nmap sb <Action>(Annotate)
+nmap sr <Action>(QuickImplementations)
+
+" 显示软换行
+nmap sw <Action>(EditorToggleUseSoftWraps)
+
+
+""" 折叠操作 """""""""""""""""""""""""""""""""""""""""""""""""
+nmap <leader>0 <Action>(CollapseAllRegions)
+nmap <leader>1 <Action>(CollapseAllRegions) <Action>(ExpandAllToLevel1)
+nmap <leader>2 <Action>(CollapseAllRegions) <Action>(ExpandAllToLevel2)
+nmap <leader>3 <Action>(CollapseAllRegions) <Action>(ExpandAllToLevel3)
+nmap <leader>4 <Action>(CollapseAllRegions) <Action>(ExpandAllToLevel4)
+nmap zf <Action>(ExpandCollapseToggleAction)
+
+
+""" 书签操作 """""""""""""""""""""""""""""""""
+nmap tt <Action>(ToggleBookmark)
+nmap <leader>tt <Action>(ShowBookmarks)
+nmap tj <Action>(GotoNextBookmark)
+nmap tk <Action>(GotoPreviousBookmark)
+nmap t1 <Action>(GotoBookmark1)
+nmap t2 <Action>(GotoBookmark2)
+nmap t3 <Action>(GotoBookmark3)
+nmap t4 <Action>(GotoBookmark4)
+nmap t5 <Action>(GotoBookmark5)
+nmap <leader>t1 <Action>(ToggleBookmark1)
+nmap <leader>t2 <Action>(ToggleBookmark2)
+nmap <leader>t3 <Action>(ToggleBookmark3)
+nmap <leader>t4 <Action>(ToggleBookmark4)
+nmap <leader>t5 <Action>(ToggleBookmark5)
+
+
+""" 分栏操作 """""""""""""""""""""""""""""""""""""""
+function! Foo()
+    :action NextSplitter
+    :action MaximizeEditorInSplit
+endfunction
+nmap gn <Action>(NextSplitter)
+" nmap sh :call Foo()<CR>
+" 最大化或者恢复原始大小
+nmap mm <Action>(MaximizeEditorInSplit)
+nmap <S-h> <Action>(StretchSplitToLeft)
+nmap <S-l> <Action>(StretchSplitToRight)

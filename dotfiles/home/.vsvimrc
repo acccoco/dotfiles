@@ -1,0 +1,36 @@
+"source ~/.vimrc
+
+
+set ignorecase
+
+""" vim 需要的快捷键
+
+""" 跳转
+nmap [ :vsc Edit.PreviousMethod<CR>
+nmap ] :vsc Edit.NextMethod<CR>
+nmap gl :vsc View.NavigateForward<CR>
+nmap gh :vsc View.NavigateBackward<CR>
+nmap gd :vsc Edit.GoToDeclaration<CR>
+nmap gf :vsc Edit.GoToDefinition<CR>
+nmap <Space>rf :vsc Edit.FindAllReferences<CR>
+
+""" 编辑
+vmap <S-j> :vsc Edit.MoveSelectedLinesDown<CR>
+vmap <S-k> :vsc Edit.MoveSelectedLinesUp<CR>
+nmap <Space>rr :vsc Refactor.rename<CR>
+nmap <Space>ff :vsc Edit.FormatDocument<CR>
+nmap <Space>ss :vsc Edit.FindinFiles<CR>
+vmap <Space>s :vsc Edit.SurroundWith<CR>
+
+""" 翻页
+nmap <S-j> <C-e>j
+nmap <S-k> <C-y>k
+nmap <S-h> <C-b>
+nmap <S-l> <C-f>
+
+""" 特殊
+nmap <Space>ll :so ~/.vsvimrc<CR>
+
+
+
+""" 在 proj/solution 中 search 

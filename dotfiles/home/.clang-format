@@ -1,0 +1,110 @@
+# tab settings
+UseTab: Never
+TabWidth: 4
+
+# indent settings
+IndentWidth: 4
+ObjCBlockIndentWidth: 4
+AccessModifierOffset: -4 # public: private: protected: indent
+ContinuationIndentWidth: 4 # 行延长缩进
+MaxEmptyLinesToKeep: 1
+IndentCaseLabels: false
+IndentExternBlock: NoIndent # extern "c" indent
+
+# allow `if (a) xxx;` AND `if (a) { xxx }``
+AllowShortIfStatementsOnASingleLine: true
+AllowShortBlocksOnASingleLine: true
+
+# align settings
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignTrailingComments: true
+AlignAfterOpenBracket: BlockIndent
+AlignOperands: DontAlign
+AlignEscapedNewlinesLeft: true
+
+# space settings
+SpacesBeforeTrailingComments: 1
+SpacesInSquareBrackets: false
+SpaceAfterCStyleCast: false
+SpaceBeforeParens: ControlStatements
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceInEmptyParentheses: false
+SpaceBeforeAssignmentOperators: true
+
+# break settings
+BreakConstructorInitializers: BeforeComma # 多行构造初始化列表样式
+BreakInheritanceList: BeforeComma # 多行继承样式
+
+# sort settings
+SortUsingDeclarations: false
+
+# disable column limit, prefer control it manually
+ColumnLimit: 0
+
+# int*, int&
+PointerAlignment: Left
+ReferenceAlignment: Left
+
+# allow multi line params like
+# int func(
+#   int a,
+#   int b,
+#   int c
+# )
+AllowAllParametersOfDeclarationOnNextLine: true
+
+# multiline binary expr syntax, our style:
+# a && b ||
+# c && d
+BreakBeforeBinaryOperators: None
+
+# multiline cond ? a : b, our style:
+# cond ?
+#   a :
+#   b
+BreakBeforeTernaryOperators: false
+
+# can we write params in single line, our style:
+# func(
+#   xxxx, xxx,
+#   xxxxx
+#   xxxxx
+# )
+BinPackArguments: true
+BinPackParameters: BinPack
+
+# do not control #if xxx, let user control it
+IndentPPDirectives: BeforeHash
+
+# brace break
+BreakBeforeBraces: Custom
+BraceWrapping:
+  # type & namespace
+  AfterClass: true
+  AfterStruct: true
+  AfterEnum: true
+  AfterNamespace: true
+  AfterUnion: true
+  # if while for...
+  AfterControlStatement: true
+  BeforeElse: true
+  BeforeWhile: true
+  # function
+  AfterFunction: true
+  # lambda
+  BeforeLambdaBody: false
+  IndentBraces: false
+  AfterExternBlock: false
+
+# func({ 1, 2, 3 })
+Cpp11BracedListStyle: false
+
+# try to keep require in single line
+RequiresClausePosition: SingleLine
+
+# keep attribute itself
+BreakAfterAttributes: Leave
+
+# do not sort includes
+SortIncludes: false
