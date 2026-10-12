@@ -21,10 +21,8 @@
 └── dotfiles
     ├── agents
     │   ├── AGENTS.md
-    │   ├── plugins
-    │   │   └── marketplace.json
-    │   └── rules
-    │       └── code-style.md
+    │   └── plugins
+    │       └── marketplace.json
     ├── home
     │   ├── .clang-format
     │   ├── .ideavimrc
@@ -49,9 +47,8 @@
 | `vsvimrc` | `dotfiles/home/.vsvimrc` | `$nu.home-dir/.vsvimrc` |
 | `codex-agents` | `dotfiles/agents/AGENTS.md` | `$nu.home-dir/.codex/AGENTS.md` |
 | `agents-plugins` | `dotfiles/agents/plugins` | `$nu.home-dir/.agents/plugins` |
-| `agents-rules` | `dotfiles/agents/rules` | `$nu.home-dir/.agents/rules` |
 
-脚本只管理 `~/.codex/AGENTS.md`、`~/.agents/plugins` 和 `~/.agents/rules` 三个具体入口，不会将整个 `~/.agents` 目录替换为链接，因此该目录中的 `skills` 等其他内容可以独立维护。
+Agent 规则统一维护在 `dotfiles/agents/AGENTS.md`。对于 Agent 配置，脚本只管理 `~/.codex/AGENTS.md` 和 `~/.agents/plugins` 两个具体入口，不会将整个 `~/.agents` 目录替换为链接，因此该目录中的 `skills` 等其他内容可以独立维护。
 
 ## 环境要求
 
@@ -150,7 +147,13 @@ nu -n .\sync.nu --help
 
 ### 从旧版 agents 整目录链接迁移
 
-旧版脚本曾将整个 `dotfiles/agents` 链接到 `~/.agents`。新版不会自动删除或改写这个旧链接，也不会覆盖已有的 `~/.codex/AGENTS.md`；这些状态会作为冲突报告。请先核对并手动清理对应目标，再重新执行 `sync`，脚本随后只会创建 `~/.codex/AGENTS.md`、`~/.agents/plugins` 和 `~/.agents/rules`。
+旧版脚本曾将整个 `dotfiles/agents` 链接到 `~/.agents`。新版不会自动删除或改写这个旧链接，也不会覆盖已有的 `~/.codex/AGENTS.md`；这些状态会作为冲突报告。请先核对并手动清理对应目标，再重新执行 `sync`，脚本随后只会创建 `~/.codex/AGENTS.md` 和 `~/.agents/plugins`。
+
+### 从独立 rules 目录迁移
+
+原 `dotfiles/agents/rules/` 中的规则已合并到 `dotfiles/agents/AGENTS.md`，旧规则文件已删除，`~/.agents/rules` 不再受脚本管理。已有的 `~/.codex/AGENTS.md` 链接会直接读取合并后的规则，无需重新同步。
+
+脚本不会删除或修改用户目录中的旧 `~/.agents/rules` 链接；删除源目录后，该链接可能成为断链。如需清理，请先核对链接目标，再手动移除旧链接。
 
 ### Windows 无法创建链接
 

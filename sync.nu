@@ -121,13 +121,6 @@ def link-specs [] {
             kind: "dir"
             required: true
         }
-        {
-            name: "agents-rules"
-            source: ([$root "dotfiles" "agents" "rules"] | path join)
-            target: ([$home ".agents" "rules"] | path join)
-            kind: "dir"
-            required: true
-        }
     ]
 }
 
