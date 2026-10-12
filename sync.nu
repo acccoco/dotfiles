@@ -114,13 +114,6 @@ def link-specs [] {
             kind: "file"
             required: true
         }
-        {
-            name: "agents-plugins"
-            source: ([$root "dotfiles" "agents" "plugins"] | path join)
-            target: ([$home ".agents" "plugins"] | path join)
-            kind: "dir"
-            required: true
-        }
     ]
 }
 
