@@ -2,6 +2,8 @@
 
 本仓库使用 Just 和 Nushell，在 Windows/macOS 上同步个人 dotfiles。`dotfiles/` 是配置的唯一权威源，脚本通过 symbolic link 将配置接入用户目录；同步行为必须保持保守，不删除、不移动、不备份，也不覆盖已有文件或目录。
 
+个人 skills 的权威源位于仓库根目录的 `marketplace/`，通过 Git 同步源码、Codex marketplace 安装插件，不参与上述 symbolic link 同步。
+
 # 敏感信息检查
 
 本仓库会同步到 GitHub public 仓库，因此：

@@ -1,0 +1,5 @@
+# 仅放行个人 marketplace，避免全局 Plugins/ 规则忽略清单和插件源码。
+!/marketplace/.agents/plugins/
+!/marketplace/.agents/plugins/marketplace.json
+!/marketplace/plugins/
+!/marketplace/plugins/**

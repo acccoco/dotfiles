@@ -4,6 +4,8 @@
 
 脚本采用保守策略：只创建缺失的链接，不删除、不移动、不备份，也不覆盖任何已有文件或目录。发现冲突时会报告并跳过，交由用户手动处理。
 
+个人 skills 的源码维护在仓库根目录的 `marketplace/` 中，通过 [Skills Marketplace](marketplace/README.md) 分发：Git 同步源码，Codex 管理插件安装与缓存。这部分不经过 symbolic link 同步。
+
 ## 功能
 
 - 检查受管链接是否存在、类型是否正确，以及是否指向预期源文件。
@@ -18,6 +20,10 @@
 .
 ├── justfile
 ├── sync.nu
+├── marketplace
+│   ├── README.md
+│   ├── .agents/plugins/marketplace.json
+│   └── plugins/personal-skills
 └── dotfiles
     ├── agents
     │   └── AGENTS.md
@@ -46,6 +52,8 @@
 | `codex-agents` | `dotfiles/agents/AGENTS.md` | `$nu.home-dir/.codex/AGENTS.md` |
 
 Agent 规则统一维护在 `dotfiles/agents/AGENTS.md`。对于 Agent 配置，脚本只管理 `~/.codex/AGENTS.md`，不管理 `~/.agents` 目录及其中的 `plugins`、`skills` 等内容。
+
+`marketplace/` 是独立注册的本地 marketplace；首次安装、跨机器同步和新增技能步骤见其 [README](marketplace/README.md)。`just status` 和 `just sync` 不检查或安装插件。
 
 ## 环境要求
 
