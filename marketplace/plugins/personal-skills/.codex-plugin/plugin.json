@@ -1,10 +1,10 @@
 {
   "name": "personal-skills",
-  "version": "0.2.1",
-  "description": "个人常用技能集合，包含使用 Python Pillow 绘图与中英文排版的工作流。",
+  "version": "0.3.0",
+  "description": "个人常用技能集合，包含使用 Python Pillow / Matplotlib 绘图与中英文排版的工作流。",
   "skills": "./skills/",
   "interface": {
     "displayName": "Personal Skills",
-    "shortDescription": "个人常用技能与 Pillow 绘图"
+    "shortDescription": "个人常用技能与 Python 绘图"
   }
 }

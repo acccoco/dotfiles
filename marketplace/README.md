@@ -11,17 +11,19 @@ marketplace/                               ← 注册时选择这一层
 └── plugins/personal-skills/                ← plugin：安装与版本管理单位
     ├── .codex-plugin/plugin.json           ← 插件名称、版本与技能入口
     └── skills/
-        └── pillow-drawing/
+        └── python-drawing/
             └── SKILL.md                   ← skill：触发条件与工作流
 ```
 
-marketplace 名称为 `personal-marketplace`，插件为 `personal-skills`，当前版本为 `0.2.1`。当前采用已在本机 Codex CLI 验证的 `.codex-plugin/plugin.json` 格式。
+marketplace 名称为 `personal-marketplace`，插件为 `personal-skills`，当前版本为 `0.3.0`。当前采用已在本机 Codex CLI 验证的 `.codex-plugin/plugin.json` 格式。
 
 marketplace 的 `source.path` 相对于本目录解析，必须以 `./` 开头并位于本目录内；插件的 `skills` 则相对于插件根目录解析。保持 marketplace 和 plugin 名称稳定，日常更新修改内容及版本即可。
 
 仓库工作副本是源码的唯一编辑入口。Codex 使用安装缓存，不直接把工作副本当作当前会话的技能内容；不要编辑安装缓存，也不要把缓存提交到仓库。插件所需的 CLI、运行时、MCP 和服务认证需要在各机器另行准备。
 
-当前提供 [pillow-drawing](plugins/personal-skills/skills/pillow-drawing/SKILL.md)：仅在明确要求使用 Python Pillow／PIL 绘图或点名技能时使用，交付图片及生成源码。默认采用参考 diagram-design 的浅色编辑式风格，规则独立记录在技能的“绘图风格”章节。运行需要 Python、Pillow 和本机可用字体；中文优先黑体系列，英文和数字优先 Consolas 等等宽字体。具体选择与缺失处理见技能说明，插件不包含字体或依赖安装脚本。
+当前提供 [python-drawing](plugins/personal-skills/skills/python-drawing/SKILL.md)：仅在明确要求使用 Python 绘图或点名技能时使用，交付图片及生成源码。支持 Pillow 和 Matplotlib，遵从用户指定的库；未指定时，图片合成与自定义排版优先 Pillow，数据图表与函数曲线优先 Matplotlib，必要时组合使用。默认采用参考 diagram-design 的浅色编辑式风格，规则独立记录在技能的“绘图风格”章节。
+
+运行需要 Python、所选绘图工具的依赖和本机可用字体；未使用的库不作为前置条件。缺库时说明目标环境、缺失包和安装命令，要求用户安装后再继续执行，不自动安装或静默替换用户指定的库。中文优先黑体系列，英文和数字优先 Consolas 等等宽字体。具体选择与缺失处理见技能说明，插件不包含字体或依赖安装脚本。
 
 ## 首次安装
 
@@ -33,7 +35,7 @@ codex plugin list --marketplace personal-marketplace --available --json
 codex plugin add personal-skills@personal-marketplace
 ```
 
-列表中应出现 `personal-skills@personal-marketplace`，版本为 `0.2.1`。第二条命令只检查发现结果，第三条才执行安装。
+列表中应出现 `personal-skills@personal-marketplace`，版本为 `0.3.0`。第二条命令只检查发现结果，第三条才执行安装。
 
 若本机已经安装旧版本，CLI 可能仍显示已安装副本的版本，不能仅凭该列表判断源码是否更新；应同时核对源码插件清单，并在更新安装后验证会话加载结果。
 
@@ -43,13 +45,17 @@ codex plugin add personal-skills@personal-marketplace
 
 ## 验证安装
 
-安装完成后重新启动客户端，新建会话，在技能选择器中选择 `pillow-drawing`，输入：
+安装完成后重新启动客户端，新建会话，在技能选择器中选择 `python-drawing`，分别验证以下两个请求：
 
 ```text
 使用 Python Pillow 生成一张包含“中文绘图 / Pillow 123”的示意图，中文使用黑体系列，英文使用等宽字体；交付 PNG 和生成源码，并说明实际使用的字体。
 ```
 
-检查技能能被选择并加载，产物包含 PNG、可复现的 Python 源码及字体说明；打开图片检查中文无缺字、中英文排版无重叠或截断。若缺少 Pillow 或字体，应得到明确的依赖说明，不能将缺字图片视为通过。
+```text
+使用 Python Matplotlib 绘制一张折线图，横轴为第 1 至 5 天，纵轴数值为 2、4、3、6、8；标题包含“每日趋势 / Trend 123”，中文使用黑体系列，英文和数字使用等宽字体；交付 PNG 和生成源码，并说明实际使用的字体。
+```
+
+检查技能能被选择并加载，遵从请求指定的库，产物包含 PNG、可复现的 Python 源码及字体说明；打开图片检查中文无缺字、中英文排版无重叠或截断，数据图保留必要的坐标轴和刻度。若所需库缺失，应说明目标环境、缺失包及安装命令，要求用户安装并暂停依赖该库的执行，不能自动安装或换库；无需卸载本机依赖来制造失败。字体缺失时应提醒安装，不能将缺字图片视为通过。其他导入错误应如实报告，不能一律解释为未安装。
 
 不要向验收会话提供源码路径或要求直接读取 `SKILL.md`，否则无法验证插件安装与技能发现。绘图成功本身也不能证明加载了哪个插件版本，应结合技能选择与插件来源、版本检查；不据此推断其他机器已同步。
 
@@ -115,7 +121,7 @@ description: 当用户要求概括当前 Git 改动时，按行为变化总结 d
 验收时分别记录以下结果，不能以一个环节通过代替全部完成：
 
 - 清单与格式：JSON 可解析，插件与技能路径存在，技能 frontmatter 合法，CLI 可发现插件及版本。
-- 绘图行为：用可用的中英文字体生成样图，运行并检查图片；此项不代替插件安装验证。
+- 绘图行为：分别运行 Pillow 和 Matplotlib 示例，检查图片、源码及字体说明；缺依赖时记录未完成项及安装提示，此项不代替插件安装验证。
 - 客户端加载：核对插件来源和版本，在新会话通过技能选择器调用并完成绘图示例。
 - 第二台机器：拉取更新后，检查来源、版本和本机依赖，并在新会话重复安装验收。
 
